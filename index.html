@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aloe Ferox Dashboard</title>
+    <!-- <link rel="stylesheet" href="index.css"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 80px;
+            background-color: #29b641;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar-header {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar-menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-icon {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #29b641;
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-icon i {
+            font-size: 24px;
+        }
+
+        .nav-icon:hover {
+            background-color: #29ce23;
+        }
+
+        .nav-label {
+            display: none;
+            position: absolute;
+            left: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+
+        .nav-icon:hover .nav-label {
+            display: block;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: scroll;
+            padding: 20px;
+            background-color: #f8f9fc;
+        }
+
+        .section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 2rem;
+            background-color: #fff;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            border: 1px solid #d1d3e2;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-bar button {
+            background-color: #29b641;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user-profile img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Aloe</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#dashboard" class="nav-icon">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#medical" class="nav-icon">
+                    <i class="fas fa-heartbeat"></i>
+                    <span class="nav-label">Medical Benefits</span>
+                </a>
+            </li>
+            <li>
+                <a href="#graphs" class="nav-icon">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="nav-label">Graphs</span>
+                </a>
+            </li>
+            <li>
+                <a href="#maps" class="nav-icon">
+                    <i class="fas fa-map"></i>
+                    <span class="nav-label">Maps</span>
+                </a>
+            </li>
+            <li>
+                <a href="#additional-info" class="nav-icon">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="nav-label">Additional Info</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="search-bar">
+                <input type="text" placeholder="Search for...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="user-profile">
+                <img src="img3.png" alt="Profile Picture">
+            </div>
+        </div>
+
+        <div id="dashboard" class="section">Dashboard Section</div>
+        <div id="medical" class="section">Medical Benefits Section</div>
+        <div id="graphs" class="section">Graphs Section</div>
+        <div id="maps" class="section">Maps Section</div>
+        <div id="additional-info" class="section">Additional Info Section</div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.nav-icon').forEach(icon => {
+            icon.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 50) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-icon').forEach(icon => {
+                icon.classList.remove('active');
+                if (icon.getAttribute('href').substring(1) === currentSection) {
+                    icon.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
